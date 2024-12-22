@@ -1,14 +1,18 @@
-import logo from '/can_i_grad.png'
-import './App.css'
-
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import HomePage from './pages/home';
+import LoginPage from './pages/LoginPage/login';
 function App() {
-
   return (
-    <>
-      <img src={logo} height={150}/>
-      <h1>Can I Grad</h1>
-    </>
-  )
+    <div>
+      <Navbar />
+      <Routes>
+         <Route path="/" element={<HomePage />}/>
+        <Route path="/about" element={<h1>About Page</h1>} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App
