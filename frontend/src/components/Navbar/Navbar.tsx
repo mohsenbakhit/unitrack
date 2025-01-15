@@ -12,9 +12,10 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Navbar() {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const isLoggedIn = Boolean(cookies.user);
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -30,9 +31,9 @@ export default function Example() {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
+                alt="UniTrack"
+                src="/unitrack.webp"
+                className="h-10 w-auto"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -96,12 +97,7 @@ export default function Example() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                  >
-                    Sign out
-                  </a>
+  
                 </MenuItem>
               </MenuItems>
             </Menu>) : (
