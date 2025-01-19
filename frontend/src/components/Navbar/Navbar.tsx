@@ -1,6 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -15,6 +16,12 @@ function classNames(...classes: any) {
 export default function Navbar() {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const isLoggedIn = Boolean(cookies.user);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {               
+      navigate("/logout")
+  }
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -97,7 +104,13 @@ export default function Navbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-  
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                  >
+                    Sign out
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>) : (

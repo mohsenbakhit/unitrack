@@ -1,14 +1,30 @@
+import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase';
 
-export const Logout = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  const navigate = useNavigate();
+export default function LogoutPage() {
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const navigate = useNavigate();
 
-  const signOut = () => {
-    removeCookie('user');
-    navigate('/login');
-  };
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            removeCookie('user', { path: '/' });
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
-  return { signOut };
-};
+    useEffect(() => {
+        handleLogout();
+    }, []);
+
+    return (
+        <div className="min-h-screen flex items-center justify-center">
+            <p>Logging out...</p>
+        </div>
+    );
+}
