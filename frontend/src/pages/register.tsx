@@ -1,5 +1,34 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [university, setUniversity] = useState('');
+    const [error, setError] = useState('');
+
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('User registered:', userCredential.user);
+            navigate('/login');
+        } catch (error: any) {
+            setError(error.message);
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -8,36 +37,67 @@ export default function RegisterPage() {
                         Create your account
                     </h2>
                 </div>
-                <form className="mt-8 space-y-6" action="#" method="POST">
-                    <input type="hidden" name="remember" value="true" />
-                    <div className="rounded-md shadow-sm -space-y-px">
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                        {error}
+                    </div>
+                )}
+                <form className="mt-8 space-y-6" onSubmit={onSubmit}>
+                    <div className="rounded-md space-y-4">
                         <div>
-                            <label htmlFor="email-address" className="sr-only">
-                                Email address
-                            </label>
+                            <label htmlFor="email-address" className="sr-only">Email address</label>
                             <input
                                 id="email-address"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Email address"
                             />
                         </div>
                         <div>
-                            <label htmlFor="password" className="sr-only">
-                                Password
-                            </label>
+                            <label htmlFor="password" className="sr-only">Password</label>
                             <input
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
+                        </div>
+                        <div>
+                            <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
+                            <input
+                                id="confirm-password"
+                                name="confirm-password"
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Confirm Password"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="university" className="sr-only">Select University</label>
+                            <select
+                                id="university"
+                                name="university"
+                                value={university}
+                                onChange={(e) => setUniversity(e.target.value)}
+                                required
+                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            >
+                                <option value="">Select your university</option>
+                                <option value="ubc">University of British Columbia</option>
+                                <option value="sfu">Simon Fraser University</option>
+                                <option value="uvic">University of Victoria</option>
+                            </select>
                         </div>
                     </div>
 
@@ -53,4 +113,4 @@ export default function RegisterPage() {
             </div>
         </div>
     );
-};
+}
