@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -14,7 +14,7 @@
     "@heroicons/react": "^2.2.0",
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
-    "firebase": "^11.2.0",
+    "firebase": "^10.0.0",
     "firebaseui": "^6.1.0",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
