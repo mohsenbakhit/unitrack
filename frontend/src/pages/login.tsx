@@ -19,13 +19,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         const user = userCredential.user;
         navigate("/")
         console.log(user);
+        onLogin({ email, password });
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage)
     });
-    onLogin({ email, password });
   }
 
   return (
