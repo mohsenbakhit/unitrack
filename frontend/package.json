@@ -1,17 +1,28 @@
 {
-  "name": "can-i-grad",
+  "name": "unitrack",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "autoprefixer": "^10.4.20",
+    "dotenv": "^16.4.7",
+    "firebase": "^10.0.0",
+    "firebaseui": "^6.1.0",
+    "postcss": "^8.4.49",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-cookie": "^7.2.2",
+    "react-cookies": "^0.1.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.0",
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
