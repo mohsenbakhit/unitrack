@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { useCookies } from 'react-cookie';
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +26,7 @@ export default function RegisterPage() {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             console.log('User registered:', userCredential.user);
+            setCookie('user', userCredential.user, { path: '/' });
             navigate('/login');
         } catch (error: any) {
             setError(error.message);

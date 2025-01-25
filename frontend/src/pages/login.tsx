@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase';
 
 interface LoginPageProps {
-  onLogin: (credentials: { email: string; password: string }) => void;
+  onLogin: (credentials: { email: string | null; }) => void;
 }
 
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +21,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         const user = userCredential.user;
         navigate("/")
         console.log(user);
-        onLogin({ email, password });
+        onLogin({ email: user.email });
     })
     .catch((error) => {
         const errorCode = error.code;
